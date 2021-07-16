@@ -19,6 +19,14 @@ import dto.PersonDTO;
 @WebServlet("*.coms")
 public class CommentsController extends HttpServlet {
 	
+	private String XSSFilter(String target) {
+		if (target != null) {
+			target = target.replaceAll("<", "&lt;");
+			target = target.replaceAll(">", "&gt;");
+			target = target.replaceAll("&", "&amp;");
+		}
+		return target;
+	}
        
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,7 +45,7 @@ public class CommentsController extends HttpServlet {
 		if(url.contentEquals("/add.coms")) {
 			
 			String writer = ((PersonDTO)request.getSession().getAttribute("login")).getId();
-			String comments = request.getParameter("comments");
+			String comments = XSSFilter(request.getParameter("comments"));
 			String gallery_seq = request.getParameter("gallery_seq");
 			
 			

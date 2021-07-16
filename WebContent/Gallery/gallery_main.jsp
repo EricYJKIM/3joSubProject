@@ -271,15 +271,15 @@
               </a>
               <div class="text p-4"> 
               	<div class="meta mb-2">
-                  <div><a href="#">작성일: ${i.write_date } </a></div>
+                  <div><a href="galDetail.gal?seq=${i.seq }">작성일: ${i.write_date } </a></div>
                  
                 </div>
                 <div class="meta mb-2">
-                  <div><a href="#">글쓴이 : ${i.writer } </a></div>
+                  <div><a href="galDetail.gal?seq=${i.seq }">글쓴이 : ${i.writer } </a></div>
                  
                 </div>
                 <br>
-                <h3 class="heading"><a href="#" style="font-size:25px;">${i.title }</a></h3>
+                <h3 class="heading"><a href="galDetail.gal?seq=${i.seq }" style="font-size:25px;">${i.title }</a></h3>
               </div>
             </div>
           </div>

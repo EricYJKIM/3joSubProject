@@ -36,6 +36,17 @@ import dto.PersonDTO;
 @WebServlet("*.gal")
 public class GalleryController extends HttpServlet {
 
+	private String XSSFilter(String target) {
+		if (target != null) {
+			target = target.replaceAll("<", "&lt;");
+			target = target.replaceAll(">", "&gt;");
+			target = target.replaceAll("&", "&amp;");
+		}
+		return target;
+	}
+	
+	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8"); 
 
@@ -84,10 +95,9 @@ public class GalleryController extends HttpServlet {
 
 				PersonDTO mdto = (PersonDTO)request.getSession().getAttribute("login");
 
-				String title = multi.getParameter("title");
-				String contents = multi.getParameter("contents");
+				String title = XSSFilter(multi.getParameter("title"));
+				String contents = XSSFilter(multi.getParameter("contents"));
 				dto.setWriter(mdto.getId()); 
-
 
 				int seq = dao.getSeq();
 				int result = dao.galWrite(seq, title, contents, mdto.getId());
@@ -290,22 +300,15 @@ public class GalleryController extends HttpServlet {
 
 				String filesPath = request.getServletContext().getRealPath("files");
 
-
-			
-				
-				
-				
 				int seq = Integer.parseInt(request.getParameter("seq"));
 
 				dao.delete(seq);
 				
 				
-				
 				String oriName = idao.getOriName(seq);
 				File targetFile = new File(filesPath+"/"+oriName);
 				targetFile.delete();
-				
-							
+						
 				idao.fileDelete(seq);
 
 				response.sendRedirect("galList.gal?cpage=1");

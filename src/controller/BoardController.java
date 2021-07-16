@@ -22,9 +22,9 @@ public class BoardController extends HttpServlet {
 	
 	private String XSSFilter(String target) {
 		if (target != null) {
-			target = target.replaceAll("<", "$lt;"); // lt = less than(작다), 기능 escape 해버림
-			target = target.replaceAll(">", "$gt;");
-			target = target.replaceAll("&", "$amp;");
+			target = target.replaceAll("<", "&lt;"); // lt = less than(작다), 기능 escape 해버림
+			target = target.replaceAll(">", "&gt;");
+			target = target.replaceAll("&", "&amp;");
 		}
 		return target;
 	}
